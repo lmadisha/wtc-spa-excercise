@@ -9,24 +9,21 @@ window.addEventListener("load", () => {
         .then(response => response.json())
         .then(data => {
             const content = data[0];
-            const div = document.createElement('div')
-            div.appendChild(createElementWithContent('h2', content.word + '&nbsp;' + content.phonetic));
-            div.appendChild(createElementWithContent('h3', "Meanings"));
-            div.appendChild(createElementWithContent('h4', content.meanings[0].partOfSpeech));
-            div.appendChild(createListWithContent('ol', content.meanings[0].definitions, 'definition'));
-            document.getElementById('app').replaceChildren(div);
+            const meaning = content.meanings[0];
+
+            const html =
+            `
+                <h2>${content.word}&nbsp;&nbsp;${content.phonetic}</h2>
+                <h3>Meanings</h3>
+                <h4>${meaning.partOfSpeech}</h4>
+                <ol>
+                    ${listOfDefinitions(meaning.definitions)}
+                </ol>
+            `;
+            document.getElementById('app').innerHTML = html;
         });
-
-
-    function createElementWithContent(type, content) {
-        const el = document.createElement(type);
-        el.innerHTML = content;
-        return el;
-    }
-
-    function createListWithContent(type, list, property) {
-        const el = document.createElement(type);
-        list.forEach(item => el.appendChild(createElementWithContent('li', item[property])));
-        return el;
-    }
 });
+
+function listOfDefinitions(definitions) {
+    return definitions.reduce((previous, current) => previous + `<li>${current.definition}</li>`, '');
+}
