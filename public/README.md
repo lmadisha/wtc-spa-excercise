@@ -1,0 +1,1 @@
+# This is the spa(Single Page Application) exercise that I learnt to do javascript fro @WeThinkCode
