@@ -15,10 +15,11 @@ function lookupWord() {
       fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`, options)
           .then(response => response.json())
           .then(data => {
+            console.log(data);
               data = {
                   word: data[0].word,
                   phonetic: data[0].phonetic,
-                  partOfSpeech: data[0].meanings[0].partOfSpeech,
+                  partOfSpeech: data[0].meanings[0].partOfSpeech + " and " + data[0].meanings[1].partOfSpeech,
                   definitions: data[0].meanings[0].definitions
               };
               const template = document.getElementById('results-template').innerText;
@@ -68,4 +69,5 @@ $('a').on('click', (event) => {
 
 router.navigateTo('/');
 });
+
 // end::router[]
