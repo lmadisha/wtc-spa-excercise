@@ -22,12 +22,19 @@ function lookupWord() {
                   partOfSpeech: data[0].meanings[0].partOfSpeech + " and " + data[0].meanings[1].partOfSpeech,
                   definitions: data[0].meanings[0].definitions
               };
-              const template = document.getElementById('results-template').innerText;
-              const compiledFunction = Handlebars.compile(template);
-              document.getElementById('results').innerHTML = compiledFunction(data);
+              renderTemplate("#results-template", data);
+              // const template = document.getElementById('results-template').innerText;
+              // const compiledFunction = Handlebars.compile(template);
+              // document.getElementById('results').innerHTML = compiledFunction(data);
           });
   });;
 }
+
+function renderTemplate(templateId, context) {
+  const templateSource = $(templateId).html();
+  const template = Handlebars.compile(templateSource);
+  $('#app').html(template(context));
+  }
 
 // tag::router[]
 window.addEventListener('load', () => {
@@ -36,6 +43,7 @@ const app = $('#app');
 const defaultTemplate = Handlebars.compile($('#default-template').html());
 const dictionaryTemplate = Handlebars.compile($('#dictionary-template').html());
 const thesaurusTemplate = Handlebars.compile($('#thesaurus-template').html());
+const formTemplate = Handlebars.compile($('#form-template').html());
 
 const router = new Router({
   mode:'hash',
@@ -47,9 +55,9 @@ const router = new Router({
 });
 
 router.add('/dictionary', async () => {
-  html = dictionaryTemplate();
-  app.html(html);
-  lookupWord();
+  // html = dictionaryTemplate();
+  // app.html(html);
+  renderTemplate('#form-template', {title: "Dictionary"});
 });
 
 router.add('/thesaurus', async () => {

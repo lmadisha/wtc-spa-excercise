@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>A Simple SPA</title>
+    <link href="data:image/x-icon;base64,..." rel="icon" type="image/x-icon" />
+</head>
+<body>
+<nav>
+    <a id="dictionary" href="#/dictionary">Dictionary</a>
+    <a id="synonyms" href="#/synonym">Synonym</a>
+    <a id="antonyms" href="#/antonym">Antonym</a>
+</nav>
+<br />
+
+<div id="app">Click on a menu item.</div>
+
+<script id="default-template" type="text/x-handlebars-template">
+    <p>Click on a menu item.</p>
+</script>
+
+<script id="results-template" type="text/x-handlebars-template">
+    <h2 id="word">{{word}}</h2>
+    {{#if phonetic}}
+    <h2 id="phonetic">{{phonetic}}</h2>
+    {{/if}} <h3>Meanings</h3>
+    <ol class="definition">
+        {{#each definitions}}
+        <li>{{this.definition}}</li>
+        {{/each}}
+    </ol>
+    <h3>Examples</h3>
+    <ol class="example">
+        {{#each definitions}}
+        <li>{{this.example}}</li>
+        {{/each}}
+    </ol>
+    <br>
+    {{#if audio}}
+    <audio controls src="{{audio}}" id="audio"></audio>
+    {{/if}}
+</script>
+
+<script id="form-template" type="text/x-handlebars-template">
+    <h1>{{title}}</h1>
+    <br/>
+    <form id="lookup-form">
+        <label>
+            <input name="word" type="text" required/>
+        </label>
+        <input name="submit" type="submit" value="Lookup"/>
+    </form>
+    <br/>
+    <div id="results"></div>
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-router@1.2.8/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script src="/js/app-5c.js"></script>
+
+</body>
+</html>
